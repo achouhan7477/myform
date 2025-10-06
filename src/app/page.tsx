@@ -10,13 +10,13 @@ export default function Page() {
   return (
     <main className="p-6">
       <div className="flex justify-center gap-4 mb-6">
-        <button onClick={() => setActiveTab("create")} className="px-4 py-2 border rounded">
+        <button onClick={() => setActiveTab("create")} className="px-4 py-2 cursor-pointer border rounded">
           Create Form
         </button>
         {/* <button onClick={() => setActiveTab("preview")} className="px-4 py-2 border rounded">
           Preview
         </button> */}
-        <button onClick={() => setActiveTab("saved")} className="px-4 py-2 border rounded">
+        <button onClick={() => setActiveTab("saved")} className="px-4 py-2 cursor-pointer border rounded">
           My Saved Form
         </button>
       </div>

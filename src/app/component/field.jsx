@@ -190,7 +190,7 @@ export default function FieldPreview({ selectedFields, setSelectedFields }) {
 
       <button
         type="submit"
-        className="text-2xl rounded text-amber-300 border border-amber-400 px-4 py-2 mt-4 hover:bg-amber-400 hover:text-black"
+        className="text-2xl rounded text-white-300 border border-amber-400 px-4 py-2 mt-4 cursor-pointer hover:text-white"
       >
         Save Form
       </button>
