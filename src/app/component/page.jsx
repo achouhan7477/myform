@@ -1,72 +1,99 @@
 "use client";
 import { useState } from "react";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { availableFields } from "../constants/page";
 
-export default function MyForm({ form }) {
-  const [formData, setFormData] = useState({});
+function SortableItem({ id, label }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}
+      className="border p-2 mb-2 bg-black shadow rounded cursor-move">
+      {label}
+    </div>
+  );
+}
 
-  const handleChange = (e) => {
-    const { name, type, value, checked, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : type === "file" ? files[0]?.name : value,
-    });
+export default function FormBuilder() {
+  const [selectedFields, setSelectedFields] = useState([]);
+
+  const addField = (field) => {
+
+    setSelectedFields([...selectedFields, { ...field, uniqueId: Date.now().toString() }]);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Submitted:", formData);
-    alert(JSON.stringify(formData, null, 2));
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      setSelectedFields((items) => {
+        const oldIndex = items.findIndex((i) => i.uniqueId === active.id);
+        const newIndex = items.findIndex((i) => i.uniqueId === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded-md shadow-md bg-white">
-      <h2 className="text-lg font-bold mb-4">              User Profile
-</h2>
-      {form.fields.map((field) => (
-        <div key={field.name} className="mb-3">
-          <label className="block mb-1 font-medium">{field.label}</label>
+    <div className="grid grid-cols-3 gap-6 p-6">
+      <div>
+        <h2 className="font-bold mb-2">Available Fields</h2>
+        {availableFields.map((f) => (
+          <button
+            key={f.id}
+            onClick={() => addField(f)}
+            className="block w-full border p-2 mb-2 rounded"
+          >
+            ➕  {f.label}
+          </button>
+        ))}
+      </div>
 
-          {["text", "email", "password", "number", "date"].includes(field.type) && (
-            <input
-              type={field.type}
-              name={field.name}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-          )}
+      <div>
+        <h2 className="font-bold mb-2">Selected Fields</h2>
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={selectedFields.map((f) => f.uniqueId)} strategy={verticalListSortingStrategy}>
+            {selectedFields.map((f) => (
+              <SortableItem key={f.uniqueId} id={f.uniqueId} label={f.label} />
+            ))}
+          </SortableContext>
+        </DndContext>
+      </div>
 
-          {field.type === "textarea" && (
-            <textarea
-              name={field.name}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-          )}
-
-          {field.type === "select" && (
-            <select name={field.name} onChange={handleChange} className="w-full p-2 border rounded">
-              <option value="">Select</option>
-              {field.options.map((opt, idx) => (
-                <option key={idx} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-          )}
-
-          {field.type === "checkbox" && (
-            <input type="checkbox" name={field.name} onChange={handleChange} />
-          )}
-
-          {field.type === "file" && (
-            <input type="file" name={field.name} onChange={handleChange} />
-          )}
-        </div>
-      ))}
-
-      <button type="submit" className="mt-3 px-4 py-2 bg-blue-600 text-white rounded">
-        Submit
-      </button>
-    </form>
+      <div>
+        <h2 className="font-bold text-black mb-2">Form Preview</h2>
+        <form className="space-y-4 border p-4 text-black rounded bg-black-50">
+          {selectedFields.map((f) => (
+            <div key={f.uniqueId}>
+              <label className="block mb-1 font-medium">{f.label}</label>
+              {f.type === "text" && <input type="text" className="border p-2 w-full" />}
+              {f.type === "email" && <input type="email" className="border p-2 w-full" />}
+              {f.type === "tel" && <input type="tel" className="border p-2 w-full" />}
+              {f.type === "number" && <input type="number" className="border p-2 w-full" />}
+              {f.type === "date" && <input type="date" className="border p-2 w-full" />}
+              {f.type === "password" && <input type="password" className="border p-2 w-full" />}
+              {f.type === "textarea" && <textarea className="border p-2 w-full"></textarea>}
+              {f.type === "select" && (
+                <select className="border p-2 w-full">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                </select>
+              )}
+              {f.type === "checkbox" && <input type="checkbox" />}
+              {f.type === "radio" && (
+                <div>
+                  <input type="radio" name={f.uniqueId} /> Option 1
+                  <input type="radio" name={f.uniqueId} className="ml-4" /> Option 2
+                </div>
+              )}
+            </div>
+          ))}
+        </form>
+      </div>
+    </div>
   );
 }
