@@ -3,7 +3,7 @@ import { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import FieldPreview from "../component/field";
-import { availableFields } from "../constants/page";
+import { availableFields } from "../constants/availableFields";
 
 export default function FormConfigure() {
   const [selectedFields, setSelectedFields] = useState([]);
