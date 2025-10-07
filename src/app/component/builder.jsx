@@ -44,7 +44,7 @@ export default function FormConfigure() {
       case "text": return "Name";
       case "email": return "@example.com";
       case "number": return "10";
-      case "password": return "Pass@123";
+      case "password": return "";
       case "select":
       case "radio": return "Option 1";
       case "checkbox": return false;
