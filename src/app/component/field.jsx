@@ -67,13 +67,13 @@ export default function FieldPreview({ selectedFields, setSelectedFields }) {
         </h2>
 
         <div className="flex gap-3">
-          <button
+          {/* <button
             type="button"
             onClick={handlePreview}
             className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-gray-500/40"
           >
             👁️ Preview
-          </button>
+          </button> */}
 
           <button
             type="submit"

@@ -1,9 +1,9 @@
 "use client";
-import SavedForm from "./component/saved";
-import EditForm from "./component/edit";
-import FormBuilder from "./component/builder";
+import SavedForm from "./form/saved/page";
+import EditForm from "./form/edit";
+import FormBuilder from "./form/create/page";
 import { useState } from "react";
-
+import UIWrapper from './component/ui'
 export default function Page() {
   const [activeTab, setActiveTab] = useState("create");
 
@@ -18,32 +18,7 @@ export default function Page() {
   return (
     <main className="p-6">
       <div className="flex justify-center gap-4 mb-6">
-        <button
-          onClick={() => setActiveTab("create")}
-          className={getTabClass("create")}
-        >
-          Create Form
-        </button>
-
-        <button
-          onClick={() => setActiveTab("saved")}
-          className={getTabClass("saved")}
-        >
-          My Saved Form
-        </button>
-
-           {/* <button
-          onClick={() => setActiveTab("edit")}
-          className={getTabClass("edit")}
-        >
-          Edit Form
-        </button> */}
-      </div>
-
-      <div className="transition-all duration-500">
-        {activeTab === "create" && <FormBuilder />}
-        {activeTab === "saved" && <SavedForm />}
-        {activeTab === "edit" && <EditForm />}
+        <UIWrapper/>
       </div>
     </main>
   );

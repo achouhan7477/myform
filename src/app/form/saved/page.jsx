@@ -105,7 +105,7 @@ export default function SavedForm() {
   }
 
   return (
-    <div className="p-6 bg-[#0D0D0D]">
+    <div className="p-6 bg-black min-h-screen">
       <h2 className="text-3xl font-bold text-center text-amber-400 mb-6">
         📋 Saved Forms
       </h2>
@@ -117,7 +117,7 @@ export default function SavedForm() {
           return (
             <div
               key={form.id}
-              className="bg-[#1A1A1A] border border-gray-700 rounded-xl shadow-md p-6 flex flex-col justify-between"
+              className="bg-gray-900 border border-gray-700 rounded-xl shadow-md p-6 flex flex-col justify-between hover:scale-[1.02] transition-all duration-200"
             >
               <div className="mb-4">
                 <h3 className="text-xl font-semibold text-white mb-3">
@@ -140,17 +140,15 @@ export default function SavedForm() {
                             value={value}
                             disabled={!isEditing}
                             onChange={(e) =>
-                              handleFieldChange(
-                                form.id,
-                                f.uniqueId,
-                                e.target.value
-                              )
+                              handleFieldChange(form.id, f.uniqueId, e.target.value)
                             }
-                            className={`p-2 rounded border bg-[#2C2C2C] text-white w-full ${
+                            className={`p-2 rounded-xl border ${
                               errorMsg
                                 ? "border-red-500"
                                 : "border-gray-600 focus:ring-amber-400"
-                            } ${isEditing ? "focus:outline-none focus:ring-2" : "opacity-70 cursor-not-allowed"}`}
+                            } w-full bg-gray-800 text-white ${
+                              isEditing ? "focus:outline-none focus:ring-2" : "opacity-70 cursor-not-allowed"
+                            }`}
                           >
                             <option value="">Select an option</option>
                             {f.options?.map((opt) => (
@@ -163,17 +161,15 @@ export default function SavedForm() {
                             value={value}
                             disabled={!isEditing}
                             onChange={(e) =>
-                              handleFieldChange(
-                                form.id,
-                                f.uniqueId,
-                                e.target.value
-                              )
+                              handleFieldChange(form.id, f.uniqueId, e.target.value)
                             }
-                            className={`p-2 rounded border bg-[#2C2C2C] text-white w-full ${
+                            className={`p-2 rounded-xl border ${
                               errorMsg
                                 ? "border-red-500"
                                 : "border-gray-600 focus:ring-amber-400"
-                            } ${isEditing ? "focus:outline-none focus:ring-2" : "opacity-70 cursor-not-allowed"}`}
+                            } w-full bg-gray-800 text-white ${
+                              isEditing ? "focus:outline-none focus:ring-2" : "opacity-70 cursor-not-allowed"
+                            }`}
                           />
                         )}
 
@@ -189,19 +185,19 @@ export default function SavedForm() {
               <div className="flex justify-between mt-4">
                 <button
                   onClick={() => toggleEdit(form.id)}
-                  className={`px-4 py-2 rounded text-white font-semibold ${
+                  className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 shadow-md ${
                     isEditing
-                      ? "bg-green-500 hover:bg-green-600"
-                      : "bg-amber-500 hover:bg-amber-600"
-                  } transition-colors`}
+                      ? "bg-green-500 hover:bg-green-600 shadow-green-500/30 text-black"
+                      : "bg-blue-400 hover:bg-blue-500 shadow-blue-400/30 text-white"
+                  }`}
                 >
-                  {isEditing ? "Save Changes" : "Edit"}
+                  {isEditing ? "💾 Save Changes" : "✏️ Edit"}
                 </button>
                 <button
                   onClick={() => handleDelete(form.id)}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                  className="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-black rounded-xl font-bold transition-all duration-200 shadow-md shadow-pink-500/30"
                 >
-                  Delete
+                  🗑️ Delete
                 </button>
               </div>
             </div>

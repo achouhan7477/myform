@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import FieldPreview from "../component/field";
-import { availableFields } from "../constants/availableFields";
+import FieldPreview from "../../component/field";
+import { availableFields } from "../../constants/availableFields";
+import Navbar from '../../component/navbar'
+
 
 export default function FormConfigure() {
   const [selectedFields, setSelectedFields] = useState([]);
@@ -139,30 +141,43 @@ export default function FormConfigure() {
   const activeField = selectedFields.find(f => f.uniqueId === activeFieldId);
 
   return (
-    <div className="grid grid-cols-4 gap-6 p-6">
+    <div className="grid grid-cols-4 gap-6 p-6 bg-black text-white min-h-screen">
+   
       <div className="col-span-1">
-        <h2 className="font-bold text-lg mb-4 text-gray-200">Available Fields</h2>
+        <h2 className="font-bold text-lg mb-4 text-blue-400">Available Fields</h2>
         {availableFields.map(f => (
           <div
             key={f.id}
-            className="border border-gray-700 p-3 mb-2 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors"
+            className="border border-gray-700 p-3 mb-2 rounded-xl cursor-pointer hover:bg-gray-800 transition-all duration-200 shadow-md"
             onClick={() => addField(f)}
           >
-            <div className="font-semibold text-gray-200">{f.label}</div>
+            <div className="font-semibold text-white">{f.label}</div>
             <div className="text-sm text-gray-400">{f.details}</div>
           </div>
         ))}
       </div>
+      
+
 
       <div className="col-span-2">
-        <h2 className="font-bold text-lg mb-4 text-gray-200">Let's Create</h2>
+        <h2 className="font-bold text-lg mb-4 text-blue-400">Let's Create</h2>
         <FieldPreview selectedFields={selectedFields} setSelectedFields={setSelectedFields} />
+
+        {/* <button
+          onClick={handleSaveForm}
+          className="mt-4 bg-blue-400 hover:bg-blue-500 text-black font-bold rounded-xl p-2 transition-all duration-200"
+        >
+          Save Form
+        </button> */}
       </div>
 
       <div className="col-span-1">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="font-bold text-gray-200">Selected Fields</h2>
-          <button onClick={clearFields} className="text-sm cursor-pointer text-red-500 hover:underline">
+          <h2 className="font-bold text-blue-400">Selected Fields</h2>
+          <button
+            onClick={clearFields}
+            className="text-sm cursor-pointer bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl px-2 py-1 transition-all duration-200"
+          >
             Clear Fields
           </button>
         </div>
@@ -176,9 +191,9 @@ export default function FormConfigure() {
               <div
                 key={f.uniqueId}
                 onClick={() => setActiveFieldId(f.uniqueId)}
-                className={`border border-gray-700 p-2 mb-2 rounded-lg cursor-pointer transition-colors ${
-                  f.uniqueId === activeFieldId ? "bg-gray-800 border-blue-500" : "bg-gray-900"
-                }`}
+                className={`border border-gray-700 p-2 mb-2 rounded-xl cursor-pointer transition-all duration-200 ${
+                  f.uniqueId === activeFieldId ? "bg-gray-800 border-amber-500" : "bg-gray-900"
+                } hover:scale-105`}
               >
                 {f.label}
               </div>
@@ -188,12 +203,12 @@ export default function FormConfigure() {
 
         {activeField && (
           <div className="mt-4 p-4 border border-gray-700 rounded-xl bg-gray-900 shadow-lg transition-all duration-300">
-            <h3 className="font-semibold mb-3 text-gray-200 text-lg">Field Options</h3>
+            <h3 className="font-semibold mb-3 text-lg text-blue-400">Field Options</h3>
 
             <label className="block mb-1 text-sm font-medium text-gray-300">Label</label>
             <input
               type="text"
-              className="border border-gray-600 rounded p-2 w-full mb-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="border border-gray-600 rounded-xl p-2 w-full mb-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
               value={activeField.label}
               onChange={(e) => updateField(activeField.uniqueId, "label", e.target.value)}
             />
@@ -201,7 +216,7 @@ export default function FormConfigure() {
             <label className="block mb-1 text-sm font-medium text-gray-300">Default Value</label>
             <input
               type={activeField.type === "date" ? "date" : "text"}
-              className="border border-gray-600 rounded p-2 w-full mb-2 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="border border-gray-600 rounded-xl p-2 w-full mb-2 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
               value={activeField.defaultValue}
               onChange={(e) => updateField(activeField.uniqueId, "defaultValue", e.target.value)}
             />
@@ -210,7 +225,7 @@ export default function FormConfigure() {
               <div className="mb-2">
                 <label className="block mb-1 text-sm font-medium text-gray-300">Date Format</label>
                 <select
-                  className="border border-gray-600 rounded p-2 w-full bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="border border-gray-600 rounded-xl p-2 w-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                   value={activeField.dateFormat || "YYYY-MM-DD"}
                   onChange={(e) => updateField(activeField.uniqueId, "dateFormat", e.target.value)}
                 >
@@ -224,13 +239,13 @@ export default function FormConfigure() {
             <div className="mt-3 relative">
               <button
                 onClick={() => setShowValidationDropdown(!showValidationDropdown)}
-                className="w-full text-left p-2 bg-gray-800 text-gray-200 border border-gray-600 rounded hover:bg-gray-700"
+                className="w-full text-left p-2 bg-amber-400 hover:bg-amber-500 text-black font-semibold rounded-xl transition-all duration-200"
               >
                 Validation Rules
               </button>
 
               {showValidationDropdown && (
-                <div className="absolute z-10 w-full mt-1 bg-gray-900 border border-gray-700 rounded shadow-lg p-3 max-h-64 overflow-auto">
+                <div className="absolute z-10 w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl shadow-lg p-3 max-h-64 overflow-auto">
                   {validationRulesByType[activeField.type]?.map(rule => (
                     <div key={rule.key} className="flex items-center gap-2 mb-2">
                       {rule.requiresValue ? (
@@ -238,7 +253,7 @@ export default function FormConfigure() {
                           <label className="text-gray-300 text-sm">{rule.label}:</label>
                           <input
                             type="text"
-                            className="border border-gray-600 rounded p-1 w-20 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                            className="border border-gray-600 rounded-xl p-1 w-20 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                             value={activeField.validations[rule.key] || ""}
                             onChange={(e) => updateValidation(activeField.uniqueId, rule.key, e.target.value)}
                           />
@@ -269,13 +284,13 @@ export default function FormConfigure() {
                   <input
                     key={i}
                     type="text"
-                    className="border border-gray-600 rounded p-2 w-full mb-1 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className="border border-gray-600 rounded-xl p-2 w-full mb-1 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                     value={opt}
                     onChange={(e) => updateOption(activeField.uniqueId, i, e.target.value)}
                   />
                 ))}
                 <button
-                  className="text-sm text-amber-400 hover:underline mt-1"
+                  className="text-sm bg-amber-400 hover:bg-amber-500 text-black font-semibold rounded-xl px-2 py-1 mt-1 transition-all duration-200"
                   onClick={() => addOption(activeField.uniqueId)}
                 >
                   + Add Option
