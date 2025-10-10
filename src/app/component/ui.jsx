@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, usePathname } from "next/navigation";
-import Navbar from './navbar'
+// import Navbar from './navbar'
 
 
 export default function UIWrapper({ children }) {
@@ -16,17 +16,17 @@ export default function UIWrapper({ children }) {
     <main className="flex flex-col min-h-screen w-full overflow-x-hidden overflow-y-auto bg-black items-center pb-[15vh] text-white">
       {/* <Navbar/> */}
       <div className="flex justify-between items-center w-full max-w-[1200px] px-8 py-4">
-        <p className="text-2xl font-bold text-white">Let Build</p>
+        <p className="text-2xl font-bold text-white">Hello, Devs</p>
       </div>
 
       <div className="flex flex-col items-center w-full max-w-[1200px] px-8 py-8">
         <div className="flex flex-col items-start mb-8 w-full">
           <p className="text-[52px] font-bold m-0">
-            <span className="text-blue-400">Hello,</span>{" "}
-            <span className="text-pink-500">Dev.</span>
+            <span className="text-blue-400">Let's,</span>{" "}
+            <span className="text-pink-500">Build</span>
           </p>
           <p className="text-gray-400 text-[38px] font-bold mt-2 mb-8 text-center w-full">
-            Your Own Custom Form
+            Our Own Custom Form
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 w-full">

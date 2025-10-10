@@ -62,8 +62,8 @@ export default function FieldPreview({ selectedFields, setSelectedFields }) {
       className="space-y-6 border border-gray-700 bg-[#121212] text-gray-200 rounded-2xl shadow-2xl p-6 transition-all duration-300 relative"
     >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-amber-400 tracking-wide">
-          🧩 Build Your Form
+        <h2 className="text-2xl font-bold text-blue-400 tracking-wide">
+         Build Your Form
         </h2>
 
         <div className="flex gap-3">
@@ -77,7 +77,7 @@ export default function FieldPreview({ selectedFields, setSelectedFields }) {
 
           <button
             type="submit"
-            className="bg-amber-500 hover:bg-amber-400 text-black px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-amber-500/30"
+            className="bg-blue-400 cursor-pointer text-black px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-amber-500/30"
           >
             💾 Save Form
           </button>
